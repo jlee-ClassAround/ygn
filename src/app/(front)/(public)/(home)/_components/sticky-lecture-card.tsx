@@ -1,20 +1,14 @@
 import { getSession } from '@/lib/session';
 import CountdownTimer from './count-down-timer';
 import RevealImage from './reval-image';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import LectureRegisterButton from './lecture-register-button';
+import { ApplyCompleteDialog } from '@/components/apply-complete-dialog';
 
 export default function StickyLectureCard() {
-    const router = useRouter();
-    const [isOpen, setIsOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const handleClick = async () => {
-        const session = await getSession();
-        if (!session.id) {
-            router.push('login');
-            return;
-        }
-    };
+    const kakaoRoomLink = 'https://m.site.naver.com/1zXVw';
+    const kakaoRoomPassword = '없음';
+
     return (
         <div className="relative">
             <div className="md:sticky md:top-[80px]">
@@ -43,12 +37,11 @@ export default function StickyLectureCard() {
                     {/* 카운트다운 */}
                     <CountdownTimer />
 
-                    <button
-                        onClick={handleClick}
-                        className="mt-6 flex w-full items-center justify-center rounded-lg bg-primary py-3 text-sm font-bold text-white transition hover:brightness-110"
-                    >
-                        무료강의 신청하기
-                    </button>
+                    <LectureRegisterButton />
+                    <ApplyCompleteDialog
+                        kakaoRoomLink={kakaoRoomLink}
+                        kakaoRoomPassword={kakaoRoomPassword}
+                    />
                 </div>
             </div>
         </div>

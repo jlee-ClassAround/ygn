@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { registrationTracker } from "@/track-events/registration-tracker";
-import { Loader2 } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { registrationTracker } from '@/track-events/registration-tracker';
+import { Loader2 } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function SignupComplete() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const redirectUrl = searchParams.get("redirectUrl");
-  const userId = searchParams.get("userId");
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectUrl = searchParams.get('redirectUrl');
+    const userId = searchParams.get('userId');
 
-  useEffect(() => {
-    if (userId) {
-      registrationTracker({ userId });
-    }
-    router.push(redirectUrl || "/mypage");
-  }, [userId, redirectUrl, router]);
+    useEffect(() => {
+        if (userId) {
+            registrationTracker({ userId });
+        }
+        router.push(redirectUrl || '/');
+    }, [userId, redirectUrl, router]);
 
-  return (
-    <div className="flex items-center justify-center bg-background size-full">
-      <Loader2 className="animate-spin size-20 text-primary" />
-    </div>
-  );
+    return (
+        <div className="flex items-center justify-center bg-background size-full">
+            <Loader2 className="animate-spin size-20 text-primary" />
+        </div>
+    );
 }

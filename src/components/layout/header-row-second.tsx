@@ -18,10 +18,10 @@ interface Props {
               userId: string;
           }
         | boolean;
-    username: string | null;
+    nickname: string | null;
 }
 
-export function HeaderRowSecond({ firstNavs, isLoggedIn, username }: Props) {
+export function HeaderRowSecond({ firstNavs, isLoggedIn, nickname }: Props) {
     const pathname = usePathname();
     const isScrolled = useCheckScroll();
 
@@ -79,7 +79,7 @@ export function HeaderRowSecond({ firstNavs, isLoggedIn, username }: Props) {
                         >
                             <User2 className="size-6" />
                             <div>
-                                <span className="font-semibold">{username || '고객'}</span>님 강의실
+                                <span className="font-semibold">MyPage</span>
                             </div>
                         </Link>
                     )}
