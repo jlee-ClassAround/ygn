@@ -1,4 +1,3 @@
-
 'use client';
 
 import { motion } from 'framer-motion';
@@ -57,7 +56,10 @@ export function HeroSection() {
             />
 
             {/* 🔥 Elementor의 e-con-inner 역할 */}
-            <div className="relative z-10 mx-auto max-w-[1180px] px-8 md:px-12 py-12">
+            <div
+                className="relative z-10 mx-auto max-w-[1180px] px-8 md:px-12 min-h-[260px] md:min-h-[340px]
+                flex items-center"
+            >
                 <motion.div
                     variants={container}
                     initial="hidden"

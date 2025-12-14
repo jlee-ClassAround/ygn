@@ -104,7 +104,6 @@ export function CourseForm({ course, categories, teachers, productBadges, freeCo
             kakaoRoomLink: course.kakaoRoomLink || undefined,
             kakaoRoomPassword: course.kakaoRoomPassword || undefined,
             title: course.title || '',
-            freeCourseId: course.freeCourseId || null, // ✅ 핵심 추가
         },
     });
     const handleChange = (value: string) => {
@@ -174,28 +173,7 @@ export function CourseForm({ course, categories, teachers, productBadges, freeCo
                                     </FormItem>
                                 )}
                             />
-                            {/* 무료강의 연결 */}
-                            <FormField
-                                name="freeCourseId"
-                                control={form.control}
-                                render={({ field }) => (
-                                    <FormItem className="flex flex-col gap-1">
-                                        <FormLabel>무료강의 연결</FormLabel>
-                                        <FormControl>
-                                            <Combobox
-                                                options={freeCourses.map((fc) => ({
-                                                    label: fc.title,
-                                                    value: fc.id,
-                                                }))}
-                                                value={field.value ?? ''} // 빈 값이면 '' 처리
-                                                onChange={(value) => field.onChange(value || null)} // 선택 안 하면 null
-                                                disabled={isSubmitting}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+
                             {/* 강의 설명 */}
                             <FormField
                                 name="description"

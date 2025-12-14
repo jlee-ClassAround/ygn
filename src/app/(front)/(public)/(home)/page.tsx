@@ -1,4 +1,4 @@
-import { HeroSection } from './_components/hero-section';
+import { HeroSection } from '../../../../components/common/hero-section/hero-section';
 import { LectureIntroSection } from './_components/lecture-intro-section';
 
 export default function Home() {
