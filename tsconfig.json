@@ -18,8 +18,7 @@
             }
         ],
         "paths": {
-            "@/*": ["./src/*"],
-            "@prisma/mysql-client": ["./src/generate/mysql-client"]
+            "@/*": ["./src/*"]
         },
         "target": "ES2017"
     },

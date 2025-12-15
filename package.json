@@ -9,7 +9,7 @@
         "lint": "next lint",
         "db:sync": "prisma db pull && prisma generate",
         "tc": "tsc --noEmit",
-        "postinstall": "prisma generate --schema=./prisma/schema.prisma && prisma generate --schema=./prisma/mysql/schema.prisma"
+        "postinstall": "prisma generate --schema=./prisma/schema.prisma"
     },
     "dependencies": {
         "@aws-sdk/client-ses": "^3.721.0",
