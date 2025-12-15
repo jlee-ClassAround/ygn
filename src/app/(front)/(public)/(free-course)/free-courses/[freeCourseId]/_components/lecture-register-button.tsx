@@ -1,8 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import CheckLogin from '../actions';
+
 import { useApplyCourseDialog } from '@/store/use-apply-course-dialog';
+import { getSession } from '@/lib/session';
+import { CheckLogin } from '../actions';
 
 export default function LectureRegisterButton() {
     const router = useRouter();
@@ -10,7 +12,6 @@ export default function LectureRegisterButton() {
 
     const handleClick = async () => {
         const res = await CheckLogin();
-
         if (!res.loggedIn) {
             router.push('/login');
         }

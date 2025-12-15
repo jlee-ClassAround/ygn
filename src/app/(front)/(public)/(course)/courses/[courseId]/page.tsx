@@ -2,9 +2,13 @@ import { HeroSection } from '@/components/common/hero-section/hero-section';
 
 import getLectureDetail from './actions';
 import { LectureIntroSection } from './_components/lecture-intro-section';
+interface Props {
+    params: Promise<{ courseId: string }>;
+}
 
-export default async function LecturePage() {
-    const lecture = await getLectureDetail();
+export default async function LecturePage({ params }: Props) {
+    const { courseId } = await params;
+    const lecture = await getLectureDetail(courseId);
 
     return (
         <>

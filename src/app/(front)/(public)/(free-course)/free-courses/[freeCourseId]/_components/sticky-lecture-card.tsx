@@ -4,8 +4,11 @@ import RevealImage from './reval-image';
 import { useState } from 'react';
 import LectureRegisterButton from './lecture-register-button';
 import { ApplyCompleteDialog } from '@/components/apply-complete-dialog';
-
-export default function StickyLectureCard() {
+import { FreeCourse } from '@prisma/client';
+interface Props {
+    lecture: FreeCourse | null;
+}
+export default function StickyLectureCard({ lecture }: Props) {
     const kakaoRoomLink = 'https://m.site.naver.com/1zXVw';
     const kakaoRoomPassword = '없음';
 

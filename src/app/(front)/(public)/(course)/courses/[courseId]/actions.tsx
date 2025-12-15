@@ -2,12 +2,16 @@
 
 import { db } from '@/lib/db';
 
-export default async function getLectureDetail() {
-    const lecture = await db.course.findFirst();
+export default async function getLectureDetail(courseId: string) {
+    const lectureInfo = await db.course.findFirst({
+        where: {
+            id: courseId,
+        },
+    });
 
     const detailImages = await db.detailImage.findMany({
         where: {
-            courseId: lecture?.id,
+            courseId: courseId,
         },
         orderBy: {
             position: 'asc',
@@ -25,7 +29,7 @@ export default async function getLectureDetail() {
     });
 
     return {
-        lectureInfo: lecture,
+        lectureInfo: lectureInfo,
         detailImages: detailImages,
         refundPolicy: refundPolicy,
         usePolicy: usePolicy,
