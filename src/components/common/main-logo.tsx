@@ -23,7 +23,7 @@ export function MainLogo({
                 <Image
                     width={140}
                     height={60}
-                    src={'logo.svg'}
+                    src={'/logo.svg'}
                     alt="Main Logo"
                     className="w-auto h-auto"
                 />

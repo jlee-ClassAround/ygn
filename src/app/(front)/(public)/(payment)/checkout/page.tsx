@@ -1,92 +1,58 @@
-import { getUserCoupons } from "@/actions/coupons/get-user-coupons";
-import { getCachedSingleCourse } from "@/actions/courses/get-single-course";
-import { getIsEnrollment } from "@/actions/enrollments/get-is-enrollment";
-import { getUser } from "@/actions/users/get-user";
-import Container from "@/components/layout/container";
-import Section from "@/components/layout/section";
-import { getSession } from "@/lib/session";
-import { calculatePrice } from "@/utils/course-price-by-type";
-import { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
-import { TossPaymentsWindow } from "./_components/toss-payments-window";
-import { getUserBillingInfo } from "@/utils/auth/get-user-billing-info";
-import StartCheckoutTracker from "@/track-events/start-checkout-tracker";
+import { redirect } from 'next/navigation';
 
-export const metadata: Metadata = {
-  title: "결제하기",
-};
+import { CheckoutLayout } from './_components/checkout-layout';
+import { OrderSummary } from './_components/order-summary';
+import { getCheckoutData } from './actions';
 
-export default async function CheckOut({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | undefined }>;
-}) {
-  const { courseId } = await searchParams;
-  if (!courseId) return notFound();
+import CheckoutClient from './_components/checkout-client';
+import { getUserBillingInfo } from '@/utils/auth/get-user-billing-info';
 
-  const { optId } = await searchParams;
+interface Props {
+    searchParams: Promise<{
+        lectureId?: string;
+    }>;
+}
 
-  const session = await getSession();
-  const user = await getUser(session.id);
-  if (!user) return notFound();
+export default async function CheckoutPage({ searchParams }: Props) {
+    const params = await searchParams;
 
-  const billingInfo = await getUserBillingInfo({ userId: user.id });
+    if (!params.lectureId) {
+        redirect('/');
+    }
 
-  const course = await getCachedSingleCourse(courseId);
-  if (!course) return notFound();
-  if (course.productType === "OPTION" && !optId) return notFound();
-  const selectedOption = course.options.find((opt) => opt.id === optId);
+    const { user, lecture } = await getCheckoutData(params.lectureId);
 
-  const { originalPrice, discountedPrice } = calculatePrice({
-    productType: course.productType,
-    originalPrice: course.originalPrice,
-    discountedPrice: course.discountedPrice,
-    selectedOption,
-  });
-  const coursePrice = discountedPrice ?? originalPrice ?? 0;
-  const courseTitle =
-    course.title + (selectedOption ? ` - ${selectedOption?.name}` : "");
+    if (!user) {
+        redirect('/login');
+    }
+    const courseId = lecture.id;
+    const billingInfo = await getUserBillingInfo({ userId: user.id });
 
-  let isTaxFree = course.isTaxFree;
-  if (selectedOption) {
-    isTaxFree = selectedOption.isTaxFree;
-  }
-
-  const isEnrolled = await getIsEnrollment(course.id, user.id);
-  if (isEnrolled) return redirect("/mypage");
-
-  const userCoupons = await getUserCoupons(user.id, course.id);
-
-  return (
-    <main>
-      <Section>
-        <Container>
-          <TossPaymentsWindow
-            productType={"COURSE"}
-            productId={courseId}
-            productOptionId={optId}
-            productPrice={coursePrice}
-            productTitle={courseTitle}
-            productThumbnail={course.thumbnail ?? ""}
-            productCategory={course.category ?? null}
-            billingInfo={billingInfo}
-            isTaxFree={isTaxFree}
-            teachers={course.teachers}
-            optionId={optId ?? ""}
-            userId={user.id}
-            coupons={userCoupons}
-            orderName={courseTitle}
-            customerEmail={user.email ?? ""}
-            customerName={user.username ?? ""}
-            customerMobilePhone={user.phone || null}
-          />
-        </Container>
-      </Section>
-      <StartCheckoutTracker
-        contentId={courseId}
-        contentType="course"
-        value={coursePrice}
-      />
-    </main>
-  );
+    return (
+        <CheckoutLayout
+            left={<CheckoutClient user={user} />}
+            right={
+                <OrderSummary
+                    productType={'COURSE'}
+                    productId={courseId}
+                    productOptionId={''}
+                    productPrice={lecture.discountedPrice ?? 0}
+                    productTitle={lecture.title}
+                    productThumbnail={lecture.thumbnail ?? ''}
+                    productCategory={null}
+                    billingInfo={billingInfo}
+                    isTaxFree={false}
+                    teachers={null}
+                    optionId={''}
+                    userId={user.id}
+                    coupons={null}
+                    orderName={lecture.title}
+                    customerEmail={user.email ?? ''}
+                    customerName={user.username ?? ''}
+                    customerMobilePhone={user.phone || null}
+                    lecture={lecture}
+                />
+            }
+        />
+    );
 }

@@ -34,7 +34,7 @@ export function HeaderRowSecond({ firstNavs, isLoggedIn, nickname }: Props) {
         >
             <div className="fit-container flex items-center justify-between">
                 <Link href="/">
-                    <MainLogo className="w-[120px] md:w-[172px]" theme="dark" />
+                    <MainLogo className="w-[120px] md:w-[172px]" theme="light" />
                 </Link>
                 <nav className="md:text-xl hidden lg:block">
                     <ul className="flex items-center gap-x-10">
