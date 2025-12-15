@@ -8,7 +8,7 @@ export default async function UsePolicyPage() {
             id: 4,
         },
     });
-    console.log(usePolicy);
+
     return (
         <div className="space-y-5">
             <div className="flex items-center justify-between">
