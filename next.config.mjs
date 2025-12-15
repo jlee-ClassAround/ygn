@@ -9,11 +9,6 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: '**',
             },
-            {
-                protocol: 'https',
-                hostname: 'ygn.co.kr',
-                pathname: '/wp-content/uploads/**',
-            },
         ],
     },
 };
