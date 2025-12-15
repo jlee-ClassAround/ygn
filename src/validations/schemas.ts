@@ -382,6 +382,7 @@ export const siteSettingSchema = z.object({
     courseRefundPolicy: z.string().optional(),
     ebookRefundPolicy: z.string().optional(),
     marketingPolicy: z.string().optional(),
+    usePolicy: z.string().optional(),
 });
 export type SiteSettingSchema = z.infer<typeof siteSettingSchema>;
 

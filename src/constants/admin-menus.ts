@@ -244,6 +244,10 @@ export const adminRoutes: AdminMenu[] = [
                 label: '환불 정책',
                 href: '/admin/settings/terms/refund-policy',
             },
+            {
+                label: '이용 안내',
+                href: '/admin/settings/terms/use-policy',
+            },
         ],
     },
 ];

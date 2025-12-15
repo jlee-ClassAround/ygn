@@ -487,6 +487,7 @@ model SiteSetting {
   siteDescription    String?
   siteTitle          String?
   recruitmentLink    String?
+  usePolicy          String?
 }
 
 model Terms {
