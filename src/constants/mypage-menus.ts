@@ -10,6 +10,11 @@ import {
 
 export const mypageMenus = [
     {
+        label: '내 강의실',
+        href: '/mypage/studyroom',
+        icon: PlayCircle,
+    },
+    {
         label: '구매내역',
         href: '/mypage/orders',
         icon: Wallet,
