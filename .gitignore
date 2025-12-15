@@ -39,7 +39,3 @@ next-env.d.ts
 
 *.db
 *.db-journal
-
-# mysql prisma setting
-src/generate/mysql-client/*
-!src/generate/mysql-client/.gitkeep
