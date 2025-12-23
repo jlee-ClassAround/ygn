@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 export default async function LoginPage() {
     return (
         <>
-            {/* <LoginForm /> */}
-            <ConfirmLoginPage />
+            <LoginForm />
+            {/* <ConfirmLoginPage /> */}
         </>
     );
 }

@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { loginAction } from '../confirm-login-action';
 
-export default function ConfirmLoginPage() {
+export default function LoginPage() {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,18 +25,20 @@ export default function ConfirmLoginPage() {
         <div className="w-full max-w-md">
             <Card className="shadow-xl border border-gray-200">
                 <CardHeader className="space-y-2 text-center">
-                    <CardTitle className="text-2xl font-bold tracking-tight">로그인</CardTitle>
-                    <CardDescription>이메일과 비밀번호를 입력해주세요.</CardDescription>
+                    <CardTitle className="text-2xl font-bold tracking-tight">
+                        관리자 로그인
+                    </CardTitle>
+                    <CardDescription>관리자 ID와 비밀번호를 입력해주세요.</CardDescription>
                 </CardHeader>
 
                 <CardContent>
                     <form onSubmit={onSubmit} className="space-y-4">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium">이메일</label>
+                            <label className="text-sm font-medium">아이디</label>
                             <Input
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="이메일 입력"
+                                placeholder="아이디 입력"
                                 required
                             />
                         </div>
@@ -55,15 +57,7 @@ export default function ConfirmLoginPage() {
                         <Button type="submit" className="w-full text-base py-5">
                             로그인
                         </Button>
-                        <Button
-                            type="button"
-                            variant="ghost"
-                            className="w-full text-base py-5 bg-gray-100 text-gray-700 hover:bg-gray-200"
-                            onClick={() => router.push('/signup')}
-                        >
-                            가입하기
-                        </Button>
-                        {/* <div className="flex gap-2 mt-2">
+                        <div className="flex gap-2 mt-2">
                             <Button
                                 type="button"
                                 variant="ghost"
@@ -80,7 +74,7 @@ export default function ConfirmLoginPage() {
                             >
                                 최초등록 하기
                             </Button>
-                        </div> */}
+                        </div>
                     </form>
                 </CardContent>
             </Card>
