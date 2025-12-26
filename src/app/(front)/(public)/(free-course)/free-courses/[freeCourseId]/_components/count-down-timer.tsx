@@ -1,12 +1,19 @@
 'use client';
 
+import { FreeCourse } from '@prisma/client';
 import { useEffect, useState } from 'react';
-
-export default function CountdownTimer() {
-    const target = new Date('2025-12-14T19:30:00+09:00').getTime();
+interface Props {
+    lecture: FreeCourse | null;
+}
+export default function CountdownTimer({ lecture }: Props) {
+    const target = lecture?.endDate?.getTime() ?? null;
     const [time, setTime] = useState(getTimeLeft());
 
     function getTimeLeft() {
+        if (target === null) {
+            return { days: 0, hours: 0, minutes: 0 };
+        }
+
         const now = Date.now();
         const diff = Math.max(target - now, 0);
 

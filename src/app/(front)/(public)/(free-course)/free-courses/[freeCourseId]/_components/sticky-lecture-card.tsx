@@ -5,12 +5,15 @@ import { useState } from 'react';
 import LectureRegisterButton from './lecture-register-button';
 import { ApplyCompleteDialog } from '@/components/apply-complete-dialog';
 import { FreeCourse } from '@prisma/client';
+import { getAppliedFreeCourse } from '@/actions/free-courses/get-applied-free-course';
 interface Props {
     lecture: FreeCourse | null;
 }
-export default function StickyLectureCard({ lecture }: Props) {
-    const kakaoRoomLink = 'https://m.site.naver.com/1zXVw';
-    const kakaoRoomPassword = '없음';
+export default async function StickyLectureCard({ lecture }: Props) {
+    const session = await getSession();
+    const applyCourse = session?.id
+        ? await getAppliedFreeCourse(session.id, lecture?.id ?? '')
+        : null;
 
     return (
         <div className="relative">
@@ -38,12 +41,16 @@ export default function StickyLectureCard({ lecture }: Props) {
                     </p>
 
                     {/* 카운트다운 */}
-                    <CountdownTimer />
+                    <CountdownTimer lecture={lecture} />
 
-                    <LectureRegisterButton />
+                    <LectureRegisterButton
+                        lecture={lecture}
+                        isLoggedIn={!!session?.id}
+                        isApplied={!!applyCourse}
+                    />
                     <ApplyCompleteDialog
-                        kakaoRoomLink={kakaoRoomLink}
-                        kakaoRoomPassword={kakaoRoomPassword}
+                        kakaoRoomLink={lecture?.kakaoRoomLink ?? 'https://m.site.naver.com/1zXVw'}
+                        kakaoRoomPassword={lecture?.kakaoRoomPassword ?? '없음'}
                     />
                 </div>
             </div>
