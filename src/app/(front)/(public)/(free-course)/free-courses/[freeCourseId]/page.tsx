@@ -1,5 +1,6 @@
 import { HeroSection } from '../../../../../../components/common/hero-section/hero-section';
-import { LectureIntroSection } from './_components/lecture-intro-section';
+import LectureIntroSection from './_components/lecture-intro-section';
+
 import { getFreeCourseDetail } from './actions';
 interface Props {
     params: Promise<{ freeCourseId: string }>;

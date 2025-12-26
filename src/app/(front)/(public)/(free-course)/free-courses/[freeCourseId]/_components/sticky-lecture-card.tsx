@@ -9,6 +9,21 @@ import { getAppliedFreeCourse } from '@/actions/free-courses/get-applied-free-co
 interface Props {
     lecture: FreeCourse | null;
 }
+type DateLike = Date | null | undefined;
+
+export function formatKoreanSchedule(endDate: DateLike): string {
+    if (!endDate) return '';
+
+    const days = ['일', '월', '화', '수', '목', '금', '토'] as const;
+
+    const month = endDate.getMonth() + 1; // 1~12
+    const date = endDate.getDate(); // 1~31
+    const day = days[endDate.getDay()]; // 요일
+    const hour = endDate.getHours(); // 0~23
+    const minute = String(endDate.getMinutes()).padStart(2, '0');
+
+    return `${month}월 ${date}일 (${day}) ${hour}시 ${minute}분`;
+}
 export default async function StickyLectureCard({ lecture }: Props) {
     const session = await getSession();
     const applyCourse = session?.id
@@ -37,7 +52,10 @@ export default async function StickyLectureCard({ lecture }: Props) {
 
                     {/* 날짜 */}
                     <p className="mb-4 text-sm font-semibold">
-                        <span className="text-primary">12월 14일 (일) 19시 30분</span> 오픈
+                        <span className="text-primary">
+                            {formatKoreanSchedule(lecture?.endDate)}
+                        </span>{' '}
+                        오픈
                     </p>
 
                     {/* 카운트다운 */}

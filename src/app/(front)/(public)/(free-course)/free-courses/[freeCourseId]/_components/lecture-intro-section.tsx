@@ -4,13 +4,19 @@ import MainPoster from './main-poster';
 import RevealImage from './reval-image';
 import { MobileApplyButton } from './mobile-apply-button';
 import StickyLectureCard from './sticky-lecture-card';
+import { getSession } from '@/lib/session';
+import { getAppliedFreeCourse } from '@/actions/free-courses/get-applied-free-course';
 
 interface Props {
     detailImages: DetailImage[];
     lectureInfo: FreeCourse | null;
 }
 
-export function LectureIntroSection({ detailImages, lectureInfo }: Props) {
+export default async function LectureIntroSection({ detailImages, lectureInfo }: Props) {
+    const session = await getSession();
+    const applyCourse = session?.id
+        ? await getAppliedFreeCourse(session.id, lectureInfo?.id ?? '')
+        : null;
     return (
         <>
             <section className="relative bg-white py-20">
@@ -33,7 +39,13 @@ export function LectureIntroSection({ detailImages, lectureInfo }: Props) {
                 </div>
             </section>
 
-            {lectureInfo && <MobileApplyButton lecture={lectureInfo} />}
+            {lectureInfo && (
+                <MobileApplyButton
+                    lecture={lectureInfo}
+                    isLoggedIn={!!session?.id}
+                    isApplied={!!applyCourse}
+                />
+            )}
         </>
     );
 }

@@ -42,7 +42,7 @@ export default function LectureRegisterButton({ lecture, isLoggedIn, isApplied }
             }
 
             await axios.post(`/api/free-courses/${lecture?.id}/apply`);
-            router.refresh();
+            // router.refresh();
             // 신청 완료 팝업
             sendGTMEvent({
                 event: 'applyCourse',
