@@ -1,4 +1,4 @@
-import { getCachedPrivacyPolicy, getPrivacyPolicy } from '@/actions/terms/get-privacy-policy';
+import { getPrivacyPolicy } from '@/actions/terms/get-privacy-policy';
 
 // metadata 전용
 export async function generateMetadata() {
@@ -9,7 +9,7 @@ export async function generateMetadata() {
 }
 
 export default async function PrivacyPolicyPage() {
-    const privacyPolicy = await getCachedPrivacyPolicy();
+    const privacyPolicy = await getPrivacyPolicy();
 
     return (
         <div className="fit-container max-w-[960px] py-14 md:pt-[100px] md:pb-[140px] space-y-10 md:space-y-[72px]">
