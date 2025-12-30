@@ -7,6 +7,7 @@ import { calculateEndDate } from '@/utils/date-utils';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+import { normalizeKRPhoneNumber } from '@/utils/formats';
 
 // 시크릿 키 인코딩
 const encryptedSecretKey =
@@ -319,10 +320,11 @@ export async function POST(req: Request) {
                     ...(updatedCoupon ? { updatedCoupon } : {}),
                 };
             });
+            const formattedPhone = normalizeKRPhoneNumber(user.phone ?? '');
 
             // 결제 완료 알림톡
             await sendAlimtalk({
-                phone: user.phone || '',
+                phone: formattedPhone,
                 username: user.username || '고객',
                 courseName: json.orderName,
                 roomLink: 'https://www.cojooboo.co.kr/mypage/studyroom',

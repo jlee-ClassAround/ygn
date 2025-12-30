@@ -12,6 +12,7 @@ import { calculateEndDate } from '@/utils/date-utils';
 import { generateOrderNumber } from '@/utils/payments/generate-order-number';
 import { revalidateTag } from 'next/cache';
 import { sendAlimtalk } from '@/actions/alimtalk/send-alimtalk';
+import { normalizeKRPhoneNumber } from '@/utils/formats';
 
 interface Props {
     paymentType?: string;
@@ -454,14 +455,15 @@ export async function confirmPayments({
                     ...(updatedCoupon ? { updatedCoupon } : {}),
                 };
             });
+            const formattedPhone = normalizeKRPhoneNumber(user.phone ?? '');
 
             // 결제 완료 알림톡
             await sendAlimtalk({
-                phone: user.phone || '',
+                phone: formattedPhone,
                 username: user.username || '고객',
                 courseName: tossPaymentResult.orderName,
-                roomLink: course.kakaoRoomLink || '',
-                roomCode: course.kakaoRoomPassword || '',
+                roomLink: 'https://www.buildingschool.co.kr/mypage/studyroom',
+                roomCode: '없음',
             });
 
             revalidateTag(`course-${productId}`);
