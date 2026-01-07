@@ -46,17 +46,8 @@ export default async function StickyLectureCard({ lecture }: Props) {
 
                     {/* 타이틀 */}
                     <h3 className="mb-3 text-xl font-extrabold leading-tight text-neutral-900">
-                        월급쟁이 <br />
-                        건물주로 은퇴하라!
+                        {lecture?.title}
                     </h3>
-
-                    {/* 날짜 */}
-                    <p className="mb-4 text-sm font-semibold">
-                        <span className="text-primary">
-                            {formatKoreanSchedule(lecture?.endDate)}
-                        </span>{' '}
-                        오픈
-                    </p>
 
                     {/* 카운트다운 */}
                     <CountdownTimer lecture={lecture} />
